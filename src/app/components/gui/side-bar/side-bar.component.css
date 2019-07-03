@@ -1,0 +1,9 @@
+.gui-side-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 4em;
+  height: calc(100% - 4em);
+  background-color: whitesmoke;
+}
+

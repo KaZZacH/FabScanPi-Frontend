@@ -1,41 +1,56 @@
 {
   "name": "fabscan-frontend",
-  "author": "Mario Lukas <info@mariolukas.de>",
-  "description": "FabScan Frontend",
-  "bugs": {
-    "url": "http://github.com/mariolukas/fabscan-frontend"
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
-  "repository": {
-    "type": "GIT",
-    "url": "http://github.com/mariolukas/fabscan-frontend"
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~7.2.0",
+    "@angular/cdk": "~7.3.7",
+    "@angular/common": "~7.2.0",
+    "@angular/compiler": "~7.2.0",
+    "@angular/core": "~7.2.0",
+    "@angular/flex-layout": "~8.0.0-beta.26",
+    "@angular/forms": "~7.2.0",
+    "@angular/http": "~7.2.15",
+    "@angular/material": "~7.3.7",
+    "@angular/platform-browser": "~7.2.0",
+    "@angular/platform-browser-dynamic": "~7.2.0",
+    "@angular/router": "~7.2.0",
+    "core-js": "~2.5.4",
+    "rxjs": "~6.3.3",
+    "tslib": "~1.10.0",
+    "lodash": "~4.17.11",
+    "three": "~0.106.1",
+    "zone.js": "~0.8.26"
   },
-  "engines": {
-    "node": ">= 0.8.4"
-  },
-  "dependencies": {},
   "devDependencies": {
-    "grunt": "0.4.1",
-    "coffee-script": "1.6.2",
-    "grunt-bump": "0.0.15",
-    "grunt-contrib-clean": "0.4.0",
-    "grunt-contrib-coffee": "0.6.4",
-    "grunt-contrib-copy": "0.4.1",
-    "grunt-contrib-concat": "0.1.3",
-    "grunt-contrib-cssmin": "0.5.0",
-    "grunt-contrib-connect": "0.2.0",
-    "grunt-contrib-uglify": "0.2.0",
-    "grunt-contrib-watch": "0.5.3",
-    "grunt-messageformat": "0.2.0",
-    "grunt-karma": "0.7.2",
-    "grunt-mkdir": "0.1.1",
-    "karma": "0.11.14",
-    "karma-coverage": "0.1.0",
-    "karma-jasmine": "0.1.3",
-    "karma-ng-scenario": "0.1.0",
-    "karma-chrome-launcher": "~0.1",
-    "karma-phantomjs-launcher": "0.1.2",
-    "karma-junit-reporter": "0.1.0",
-    "phantomjs": "1.9.8"
+    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular/cli": "~7.3.9",
+    "@angular/compiler-cli": "~7.2.0",
+    "@angular/language-service": "~7.2.0",
+    "@types/jasmine": "~2.8.8",
+    "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "@types/three": "^0.103.2",
+    "codelyzer": "~4.5.0",
+    "jasmine-core": "~2.99.1",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~4.0.0",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~1.1.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.11.0",
+    "typescript": "~3.2.2"
   }
 }
-
