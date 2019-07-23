@@ -7,3 +7,9 @@
   background-color: #ededed;
 }
 
+
+.gui-bottom-toolbar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

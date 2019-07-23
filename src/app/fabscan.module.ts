@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AngularMaterialModule } from './materials.module';
 
@@ -19,7 +20,7 @@ import { SideBarComponent } from './components/gui/side-bar/side-bar.component';
     SideBarComponent
   ],
   imports: [
-    BrowserModule, AngularMaterialModule
+    BrowserModule, AngularMaterialModule, HttpClientModule
   ],
   providers: [],
   bootstrap: [FabscanComponent]

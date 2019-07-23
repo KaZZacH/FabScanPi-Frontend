@@ -11,4 +11,7 @@ export class BottomBarComponent implements OnInit {
 
   ngOnInit() {}
 
+  clickMain() {
+    console.log('TEST');
+  }
 }
