@@ -5,13 +5,15 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './bottom-bar.component.html',
   styleUrls: ['./bottom-bar.component.css']
 })
-export class BottomBarComponent implements OnInit {
+export class BottomBarComponent implements OnInit
+{
 
   constructor() {}
 
   ngOnInit() {}
 
-  clickMain() {
+  clickMain()
+  {
     console.log('TEST');
   }
 }

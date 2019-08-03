@@ -13,9 +13,11 @@ export interface CustomMatIcon {
   styleUrls: ['./gui.component.css']
 })
 
-export class GuiComponent implements OnInit {
+export class GuiComponent implements OnInit
+{
 
-  private customMatIcons: Array<CustomMatIcon> = [
+  private customMatIcons: Array<CustomMatIcon> =
+  [
     {name: 'fabscan_mesh', path: '../../assets/icon_mesh.svg'},
     {name: 'fabscan_pointcloud', path: '../../assets/icon_pointcloud.svg'},
     {name: 'fabscan_scan', path: '../../assets/icon_scan.svg'}
@@ -23,7 +25,8 @@ export class GuiComponent implements OnInit {
 
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {}
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.customMatIcons.forEach(icon => {
       this.matIconRegistry.addSvgIcon(icon.name, this.domSanitizer.bypassSecurityTrustResourceUrl(icon.path));
     });

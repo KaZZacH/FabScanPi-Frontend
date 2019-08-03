@@ -7,7 +7,8 @@ import {DomSanitizer} from '@angular/platform-browser';
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css'],
 })
-export class SideBarComponent implements OnInit {
+export class SideBarComponent implements OnInit
+{
 
   constructor() {}
 

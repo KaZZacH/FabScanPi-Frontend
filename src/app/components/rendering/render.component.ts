@@ -7,12 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./render.component.css'],
 })
 
-export class RenderComponent implements OnInit {
+export class RenderComponent implements OnInit
+{
 
-  private renderService: RenderService = new RenderService();
-
-  ngOnInit() {
-    this.renderService.createScene('canvas');
-    this.renderService.animate();
-  }
+  ngOnInit()
+  {}
 }
