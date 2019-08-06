@@ -23,7 +23,9 @@ export class GuiComponent implements OnInit
     {name: 'fabscan_scan', path: '../../assets/icon_scan.svg'}
   ];
 
-  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {}
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer)
+  {
+  }
 
   ngOnInit()
   {

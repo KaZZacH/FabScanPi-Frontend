@@ -1,5 +1,5 @@
-import { RenderService } from '../../services/render.service';
 import { Component, OnInit } from '@angular/core';
+import {FabscanComponent} from "../fabscan.component";
 
 @Component({
   selector: 'fabscan-renderer',
@@ -9,6 +9,10 @@ import { Component, OnInit } from '@angular/core';
 
 export class RenderComponent implements OnInit
 {
+
+  private isLeftButtonDown: boolean = false;
+
+  constructor(){}
 
   ngOnInit()
   {}
