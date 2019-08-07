@@ -13,8 +13,6 @@ export class RenderService
   private light: THREE.AmbientLight;
   private readonly canvas: HTMLCanvasElement;
 
-  private lastFrameTime: number = 0;
-
   constructor(elementId: string)
   {
     this.canvas = document.getElementById(elementId) as HTMLCanvasElement;
@@ -28,14 +26,14 @@ export class RenderService
     document.body.appendChild( this.stats.dom );
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0xFFFFFF, 0.2);
+    this.renderer.setClearColor(new THREE.Color(0.56,0.56,0.56), 0.2);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.scene = new THREE.Scene();
 
     let aspectRatio = window.innerWidth / window.innerHeight;
     this.camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 10000);
-    this.camera.position.set(5000, 5000, 5000);
+    this.camera.position.set(100,100,100);
     this.scene.add(this.camera);
 
     this.light = new THREE.AmbientLight( 0xFFFFFF );
@@ -43,6 +41,8 @@ export class RenderService
     this.light.position.y = 500;
     this.light.position.z = 500;
     this.scene.add(this.light);
+
+    this.scene.add(new THREE.AxesHelper(80));
   }
 
   public animate(): void
@@ -69,21 +69,14 @@ export class RenderService
   {
     requestAnimationFrame(() =>
     {
-      this.lastFrameTime = Date.now();
       this.render();
-      this.lastFrameTime = Date.now() - this.lastFrameTime;
     });
 
-    // this.scene.getObjectByName("Fabscan Pointcloud").rotation.y += 0.01;
-    this.scene.getObjectByName("Fabscan Pointcloud").rotation.y += (0.00000000000001 * this.lastFrameTime);
+    this.scene.getObjectByName("Fabscan Pointcloud").rotation.z += 0.01;
 
     this.stats.begin();
     this.renderer.render(this.scene, this.camera);
     this.stats.end();
-
-
-
-
   }
 
   private resize()

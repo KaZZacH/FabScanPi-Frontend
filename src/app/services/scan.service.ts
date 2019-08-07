@@ -53,17 +53,18 @@ export class ScanService
         //Calls the Fabscan root to swap the objects inside THREE.Scene.
         this.onPointCloudSwapEnd(this.pointcloud, this.swapPointCloudsBuffer[nextBufferIdx]).then(() =>
         {
+          this.pointcloud.dispose();
           this.swapIndex = nextBufferIdx;
-          this.pointcloud = this.swapPointCloudsBuffer[this.swapIndex];
+          this.pointcloud = this.swapPointCloudsBuffer[nextBufferIdx];
           this.isSwapingClouds = false;
           this.addPoints(this.swapPointcloudCache);
         }).catch((error) =>
         {
-          console.log(error);
+          console.error(error);
         });
       }).catch((error) =>
       {
-        console.log(error);
+        console.error(error);
       });
     }
   }
