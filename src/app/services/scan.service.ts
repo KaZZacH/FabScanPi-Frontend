@@ -25,7 +25,6 @@ export class ScanService
   {
     if (this.isSwapingClouds)
     {
-      console.log("=== CACHING INCOMING POINT SINCE SWAP IN PROGRESS ===");
       this.swapPointcloudCache.push(...points);
       return;
     }
@@ -34,8 +33,8 @@ export class ScanService
 
     if (this.pointcloud.getCloudBufferIndex() + pointsBufferSize <= this.pointcloud.getBufferSize())
     {
-      if (points === this.swapPointcloudCache)
-        console.log("=== APPLYING CACHED POINTS TO CLOUD SINCE SWAP IS OVER: " + points.length + " ===");
+      // if (points === this.swapPointcloudCache)
+      //   console.log("=== APPLYING CACHED POINTS TO CLOUD SINCE SWAP IS OVER: " + points.length + " ===");
 
       this.pointcloud.addPoints(points);
       // At this point, it is always save to clear the swap cache. If we reach this point

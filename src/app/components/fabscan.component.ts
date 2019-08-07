@@ -36,7 +36,7 @@ export class FabscanComponent implements OnInit
     {
       let randomPoints: Array<PointCloudPoint> = [];
       // let numPoints = Math.floor(1000 + Math.random() * 9000);
-      let numPoints = 1000;
+      let numPoints = 10000;
       // console.log("Adding " + numPoints + " random Points");
       for (let i = 0; i < numPoints; i++)
       {

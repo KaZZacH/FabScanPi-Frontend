@@ -13,6 +13,8 @@ export class RenderService
   private light: THREE.AmbientLight;
   private readonly canvas: HTMLCanvasElement;
 
+  private lastFrameTime: number = 0;
+
   constructor(elementId: string)
   {
     this.canvas = document.getElementById(elementId) as HTMLCanvasElement;
@@ -67,15 +69,21 @@ export class RenderService
   {
     requestAnimationFrame(() =>
     {
+      this.lastFrameTime = Date.now();
       this.render();
+      this.lastFrameTime = Date.now() - this.lastFrameTime;
     });
 
-    // this.scene.getObjectByName("Fabscan Pointcloud").rotation.x += 0.01;
-    this.scene.getObjectByName("Fabscan Pointcloud").rotation.y += 0.005;
+    // this.scene.getObjectByName("Fabscan Pointcloud").rotation.y += 0.01;
+    this.scene.getObjectByName("Fabscan Pointcloud").rotation.y += (0.00000000000001 * this.lastFrameTime);
 
     this.stats.begin();
     this.renderer.render(this.scene, this.camera);
     this.stats.end();
+
+
+
+
   }
 
   private resize()

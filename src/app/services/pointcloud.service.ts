@@ -16,15 +16,14 @@ export class PointcloudService
   private readonly size: number = 0;
   private readonly bufferSize: number = 0;
 
-  private readonly positionBuffer: Float32Array = [];
-  private readonly colorBuffer: Float32Array = [];
+  private readonly positionBuffer: Float32Array = undefined;
+  private readonly colorBuffer: Float32Array = undefined;
 
-  private readonly renderMaterial: THREE.PointsMaterial;
-  private readonly bufferGeometry: THREE.BufferGeometry;
+  private readonly renderMaterial: THREE.PointsMaterial = undefined;
+  private readonly bufferGeometry: THREE.BufferGeometry = undefined;
 
   constructor(size: number)
   {
-    console.log("NEW SIZE: " + size);
     this.size = size;
     this.bufferSize = this.size * 3;
 
