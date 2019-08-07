@@ -1,6 +1,5 @@
-import * as THREE from 'three';
 import { Injectable } from '@angular/core';
-import { PointcloudService } from "./pointcloud.service";
+import { PointCloudPoint, PointcloudService } from './pointcloud.service';
 
 @Injectable({providedIn: 'root'})
 export class ScanService
@@ -9,7 +8,7 @@ export class ScanService
 
   private swapIndex: number = 0;
   private isSwapingClouds: boolean = false;
-  private swapPointcloudCache: Array<THREE.Vector3>;
+  private swapPointcloudCache: Array<PointCloudPoint>;
   private swapPointCloudsBuffer: Array<PointcloudService> = [undefined, undefined];
   private readonly swapMemIncFactor: number = 1.6;
 
@@ -22,9 +21,8 @@ export class ScanService
     this.onPointCloudSwapEnd = onPointCloudSwapEnd;
   }
 
-  public addPoints(points: Array<THREE.Vector3>)
+  public addPoints(points: Array<PointCloudPoint>)
   {
-
     if (this.isSwapingClouds)
     {
       console.log("=== CACHING INCOMING POINT SINCE SWAP IN PROGRESS ===");
@@ -49,17 +47,20 @@ export class ScanService
       this.isSwapingClouds = true;
 
       let currBufferIdx = this.swapIndex;
-      let nextBufferidx = (this.swapIndex + 1) % 2;
+      let nextBufferIdx = (this.swapIndex + 1) % 2;
 
-      this.swapPointClouds(currBufferIdx, nextBufferidx).then(() =>
+      this.swapPointClouds(currBufferIdx, nextBufferIdx).then(() =>
       {
         //Calls the Fabscan root to swap the objects inside THREE.Scene.
-        this.onPointCloudSwapEnd(this.pointcloud, this.swapPointCloudsBuffer[nextBufferidx]).then(() =>
+        this.onPointCloudSwapEnd(this.pointcloud, this.swapPointCloudsBuffer[nextBufferIdx]).then(() =>
         {
-          this.swapIndex = nextBufferidx;
+          this.swapIndex = nextBufferIdx;
           this.pointcloud = this.swapPointCloudsBuffer[this.swapIndex];
           this.isSwapingClouds = false;
           this.addPoints(this.swapPointcloudCache);
+        }).catch((error) =>
+        {
+          console.log(error);
         });
       }).catch((error) =>
       {
@@ -80,7 +81,8 @@ export class ScanService
 
       console.log(this.swapPointCloudsBuffer[nextBufferidx]);
 
-      this.swapPointCloudsBuffer[nextBufferidx].setBuffer(this.swapPointCloudsBuffer[currBufferIdx].getBuffer());
+      this.swapPointCloudsBuffer[nextBufferidx].setPositionBuffer(this.swapPointCloudsBuffer[currBufferIdx].getPositionBuffer());
+      this.swapPointCloudsBuffer[nextBufferidx].setColorBuffer(this.swapPointCloudsBuffer[currBufferIdx].getColorBuffer());
       resolve();
     });
   }

@@ -10,15 +10,16 @@ export class RenderService
   public camera: THREE.PerspectiveCamera;
 
   private stats: Stats;
-  private canvas: HTMLCanvasElement;
   private light: THREE.AmbientLight;
+  private readonly canvas: HTMLCanvasElement;
 
-  constructor() {}
-
-  public createScene(elementId: string): void
+  constructor(elementId: string)
   {
-
     this.canvas = document.getElementById(elementId) as HTMLCanvasElement;
+  }
+
+  public createScene(): void
+  {
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas, alpha: true, antialias: true});
 
     this.stats = new Stats();
@@ -68,6 +69,9 @@ export class RenderService
     {
       this.render();
     });
+
+    // this.scene.getObjectByName("Fabscan Pointcloud").rotation.x += 0.01;
+    this.scene.getObjectByName("Fabscan Pointcloud").rotation.y += 0.005;
 
     this.stats.begin();
     this.renderer.render(this.scene, this.camera);
