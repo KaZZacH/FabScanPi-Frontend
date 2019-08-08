@@ -5,7 +5,6 @@ import {RenderService} from "../services/render.service";
 import {ScanService} from "../services/scan.service";
 import {PointCloudPoint} from '../services/pointcloud.service';
 import {PLYLoader} from "three/examples/jsm/loaders/PLYLoader";
-import {BufferGeometry} from "three";
 
 @Component({
   selector: 'fabscan-root',
@@ -34,21 +33,20 @@ export class FabscanComponent implements OnInit
     this.renderService = new RenderService('canvas');
     this.renderService.createScene();
     this.renderService.scene.add(this.scanService.pointcloud.points);
-    this.renderService.camera.lookAt(this.scanService.pointcloud.points.position);
     this.renderService.animate();
-
+    this.resetControls();
     this.runTest();
   }
 
   private runTest()
   {
     // ply comes in LH orientation, but OGL is RH
-    this.scanService.pointcloud.points.rotateOnAxis(new THREE.Vector3(1,0,0), -1.57079632679);
+    this.scanService.pointcloud.points.rotateOnAxis(new THREE.Vector3(1,0,0), -Math.PI / 2);
 
     // this.loadPlyAsync('./assets/scan_20190709-220809_roh.ply').then((geometry) =>
-    // this.loadPlyAsync('./assets/einstein_cleaned.ply').then((geometry) =>
+    this.loadPlyAsync('./assets/einstein_cleaned.ply').then((geometry) =>
     // this.loadPlyAsync('./assets/Classic side table.ply').then((geometry) =>
-    this.loadPlyAsync('./assets/einstein_high_res.ply').then((geometry) =>
+    // this.loadPlyAsync('./assets/einstein_high_res.ply').then((geometry) =>
     // this.loadPlyAsync('./assets/einstein_high_res_dual_color.ply').then((geometry) =>
     {
       this.streamingGeometry = geometry as THREE.BufferGeometry;
@@ -70,9 +68,9 @@ export class FabscanComponent implements OnInit
 
     if (this.streamingIndex >= this.streamingGeometryBufferSize)
     {
-      console.log("== SCAN FINISHED ==");
       if(!this.doneUpdateAfterScan)
       {
+        console.log("== SCAN FINISHED ==");
         this.scanService.pointcloud.update();
         this.doneUpdateAfterScan = true;
       }
@@ -127,6 +125,16 @@ export class FabscanComponent implements OnInit
         reject(error);
       });
     });
+  }
+
+  public resetControls()
+  {
+    let lookAt: THREE.Vector3 = new THREE.Vector3();
+    this.scanService.pointcloud.points.position.copy(lookAt);
+    lookAt.add(new THREE.Vector3(0, 25, 0));
+    this.renderService.camera.position.set(100,100,100);
+    this.renderService.controls.target = lookAt;
+    this.renderService.camera.lookAt(lookAt);
   }
 
   /**

@@ -81,6 +81,7 @@ export class PointcloudService
     (this.bufferGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
     (this.bufferGeometry.attributes.color as THREE.BufferAttribute).needsUpdate = true;
     this.bufferGeometry.setDrawRange(0, this.currentBufferIndex);
+    this.bufferGeometry.computeBoundingSphere();
     this.lastUpdate = Date.now();
   }
 

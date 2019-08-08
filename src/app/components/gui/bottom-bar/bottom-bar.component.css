@@ -5,6 +5,7 @@
   height: 4em;
   width: 100%;
   background-color: #ededed;
+  z-index: 10;
 }
 
 
@@ -12,4 +13,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
