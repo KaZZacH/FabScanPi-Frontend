@@ -16,31 +16,23 @@ export class RenderService
   private grid: THREE.GridHelper;
   private stats: Stats;
   private light: THREE.AmbientLight;
-  private readonly fog: THREE.Fog;
   private readonly canvas: HTMLCanvasElement;
 
-  constructor(elementId: string, useFog: boolean = false)
+  constructor(elementId: string)
   {
     this.canvas = document.getElementById(elementId) as HTMLCanvasElement;
-
-    if (useFog)
-      this.fog = new THREE.Fog(0x0F0F0F, 30, 35);
-  }
-
-  public createScene(): void
-  {
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas, alpha: true, antialias: true});
-
     this.stats = new Stats();
     document.body.appendChild(this.stats.dom);
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(new THREE.Color(0.56,0.56,0.56), 0.2);
     this.renderer.setPixelRatio(window.devicePixelRatio);
+  }
 
+  public createScene(): void
+  {
     this.scene = new THREE.Scene();
-    if (this.fog)
-      this.scene.fog = this.fog;
 
     // camera-----------------------------------------------------------------------------------------------------------
     let aspectRatio = window.innerWidth / window.innerHeight;
@@ -61,25 +53,34 @@ export class RenderService
     this.controls.panSpeed = 0.1;
     this.controls.enablePan = true;
 
-    // light---------------------------------------------------------------------------------------------------------
+    // light------------------------------------------------------------------------------------------------------------
     this.light = new THREE.AmbientLight( 0xFFFFFF );
     this.light.position.x = 500;
     this.light.position.y = 500;
     this.light.position.z = 500;
     this.scene.add(this.light);
 
+    //grid--------------------------------------------------------------------------------------------------------------
     this.grid = new THREE.GridHelper(250, 50,
       new THREE.Color(0.75, 0.75, 0.75),
       new THREE.Color(0.5,0.5,0.5)
     );
+
     (this.grid.material as THREE.Material).opacity = 0.25;
     (this.grid.material as THREE.Material).transparent = true;
     (this.grid.material as THREE.Material).fog = false;
     this.scene.add(this.grid);
 
+    //axes--------------------------------------------------------------------------------------------------------------
     this.axes = new THREE.AxesHelper(40);
     (this.axes.material as THREE.Material).fog = false;
     this.scene.add(this.axes);
+  }
+
+  public setFog(fog: THREE.IFog)
+  {
+    if(!this.scene) return;
+    this.scene.fog = fog;
   }
 
   public animate(): void

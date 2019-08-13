@@ -20,8 +20,9 @@ export class FabscanComponent implements OnInit
   ngOnInit()
   {
     this.scanService = new ScanService(200000, this.addPointCloudToScene.bind(this));
-    this.renderService = new RenderService('canvas', false);
+    this.renderService = new RenderService('canvas');
     this.renderService.createScene();
+    // this.renderService.setFog(new THREE.Fog(0x0, 80, 85));
     this.renderService.animate();
     this.addPointCloudToScene();
     this.resetControls();
@@ -34,7 +35,7 @@ export class FabscanComponent implements OnInit
   {
     let lookAt: THREE.Vector3 = new THREE.Vector3();
     this.scanService.pointcloud.points.position.copy(lookAt);
-    lookAt.add(new THREE.Vector3(0, 25, 0));
+    lookAt.add(new THREE.Vector3(0, 45, 0));
     this.renderService.camera.position.set(100,100,100);
     this.renderService.controls.target = lookAt;
     this.renderService.camera.lookAt(lookAt);
