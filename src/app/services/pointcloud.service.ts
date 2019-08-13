@@ -25,10 +25,10 @@ export class PointcloudService
   private readonly renderMaterial: THREE.PointsMaterial = undefined;
   private readonly bufferGeometry: THREE.BufferGeometry = undefined;
 
-  private readonly debugMode: boolean = false;
+  private readonly debugMode: boolean = true;
   private readonly debugColor: THREE.Color;
 
-  constructor(size: number)
+  constructor(size: number, name: string)
   {
     this.maxSize = size;
     this.bufferSize = this.maxSize * 3;
@@ -44,7 +44,7 @@ export class PointcloudService
     this.renderMaterial = new THREE.PointsMaterial({vertexColors: THREE.VertexColors, size: 0.1, fog: true});
 
     this.points = new THREE.Points(this.bufferGeometry,  this.renderMaterial);
-    this.points.name = "Fabscan Pointcloud";
+    this.points.name = name;
 
     this.bufferGeometry.setDrawRange(0, this.currentBufferIndex);
 

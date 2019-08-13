@@ -13,7 +13,7 @@ export class ScanService
   constructor(cloudSize: number, onPointCloudSwapEnd: Function)
   {
     this.pointCloudSize = cloudSize;
-    this.pointCloudBuffer.push(new PointcloudService(cloudSize));
+    this.pointCloudBuffer.push(new PointcloudService(cloudSize, "Fabscan Pointcloud #0"));
     this.pointcloud = this.pointCloudBuffer[0];
     this.onPointCloudSwapEnd = onPointCloudSwapEnd;
   }
@@ -29,7 +29,7 @@ export class ScanService
     else
     {
       console.log("=== SWAPPING ===");
-      this.pointCloudBuffer.push(new PointcloudService(this.pointCloudSize));
+      this.pointCloudBuffer.push(new PointcloudService(this.pointCloudSize, "Fabscan Pointcloud #" + this.pointCloudBuffer.length));
       this.pointcloud.update();
       this.pointcloud = this.pointCloudBuffer[this.pointCloudBuffer.length - 1];
       this.onPointCloudSwapEnd();
