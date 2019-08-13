@@ -2,29 +2,29 @@ import * as THREE from 'three';
 import { Injectable } from '@angular/core';
 import Stats from '../lib/stats.lib.js';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import {Material} from "three";
-
-const VECTOR_UP: THREE.Vector3 = new THREE.Vector3(0,1,0);
-const VECTOR_RIGHT: THREE.Vector3 = new THREE.Vector3(1,0,0);
-const VECTOR_FORWARD: THREE.Vector3 = new THREE.Vector3(0,0,1);
 
 @Injectable({providedIn: 'root'})
 export class RenderService
 {
   public scene: THREE.Scene;
   public renderer: THREE.WebGLRenderer;
+
   public camera: THREE.PerspectiveCamera;
   public controls: OrbitControls;
-
   private axes: THREE.AxesHelper;
+
   private grid: THREE.GridHelper;
   private stats: Stats;
   private light: THREE.AmbientLight;
+  private readonly fog: THREE.Fog;
   private readonly canvas: HTMLCanvasElement;
 
-  constructor(elementId: string)
+  constructor(elementId: string, useFog: boolean = false)
   {
     this.canvas = document.getElementById(elementId) as HTMLCanvasElement;
+
+    if (useFog)
+      this.fog = new THREE.Fog(0x0F0F0F, 30, 35);
   }
 
   public createScene(): void
@@ -39,6 +39,8 @@ export class RenderService
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.scene = new THREE.Scene();
+    if (this.fog)
+      this.scene.fog = this.fog;
 
     // camera-----------------------------------------------------------------------------------------------------------
     let aspectRatio = window.innerWidth / window.innerHeight;
@@ -70,11 +72,13 @@ export class RenderService
       new THREE.Color(0.75, 0.75, 0.75),
       new THREE.Color(0.5,0.5,0.5)
     );
-    (this.grid.material as Material).opacity = 0.25;
-    (this.grid.material as Material).transparent = true;
+    (this.grid.material as THREE.Material).opacity = 0.25;
+    (this.grid.material as THREE.Material).transparent = true;
+    (this.grid.material as THREE.Material).fog = false;
     this.scene.add(this.grid);
 
     this.axes = new THREE.AxesHelper(40);
+    (this.axes.material as THREE.Material).fog = false;
     this.scene.add(this.axes);
   }
 

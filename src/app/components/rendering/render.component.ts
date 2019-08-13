@@ -20,14 +20,9 @@ interface MouseState
 
 export class RenderComponent implements OnInit
 {
-  private mouseState: MouseState;
-
   constructor(private fabscan: FabscanComponent){}
 
-  ngOnInit()
-  {
-    this.mouseState = {leftButtonDown: false, rightButtonDown: false, middleButtonDown: false};
-  }
+  ngOnInit() {}
 
   private onDoubleMouseClick()
   {
