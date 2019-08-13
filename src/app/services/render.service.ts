@@ -32,7 +32,7 @@ export class RenderService
     this.renderer = new THREE.WebGLRenderer({canvas: this.canvas, alpha: true, antialias: true});
 
     this.stats = new Stats();
-    document.body.appendChild( this.stats.dom );
+    document.body.appendChild(this.stats.dom);
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(new THREE.Color(0.56,0.56,0.56), 0.2);
@@ -58,15 +58,6 @@ export class RenderService
     this.controls.zoomSpeed = 1.0;
     this.controls.panSpeed = 0.1;
     this.controls.enablePan = true;
-    // this.controls.screenSpacePanning = false;
-    // minZoom: number;
-    // maxZoom: number;
-    // minAzimuthAngle: number;
-    // maxAzimuthAngle: number;
-    // keyPanSpeed: number;
-    // autoRotate: boolean;
-    // autoRotateSpeed: number;
-
 
     // light---------------------------------------------------------------------------------------------------------
     this.light = new THREE.AmbientLight( 0xFFFFFF );

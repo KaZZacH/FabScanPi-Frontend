@@ -28,31 +28,35 @@ export class FabscanComponent implements OnInit
 
   ngOnInit()
   {
-    this.scanService = new ScanService(20000, this.swapPointCloudsInScene.bind(this));
+    this.scanService = new ScanService(200000, this.addPointCloudToScene.bind(this));
 
     this.renderService = new RenderService('canvas');
     this.renderService.createScene();
-    this.renderService.scene.add(this.scanService.pointcloud.points);
     this.renderService.animate();
-    this.resetControls();
-    this.runTest();
+    this.addPointCloudToScene().then(() =>
+    {
+      this.resetControls();
+      this.runTest();
+    });
   }
 
   private runTest()
   {
     // ply comes in LH orientation, but OGL is RH
-    this.scanService.pointcloud.points.rotateOnAxis(new THREE.Vector3(1,0,0), -Math.PI / 2);
-
+    // this.scanService.pointcloud.points.scale.x = 0.1;
+    // this.scanService.pointcloud.points.scale.y = 0.1;
+    // this.scanService.pointcloud.points.scale.z = 0.1;
+    // this.loadPlyAsync('./assets/damaliscus_korrigum.ply').then((geometry) =>
     // this.loadPlyAsync('./assets/scan_20190709-220809_roh.ply').then((geometry) =>
-    this.loadPlyAsync('./assets/einstein_cleaned.ply').then((geometry) =>
     // this.loadPlyAsync('./assets/Classic side table.ply').then((geometry) =>
-    // this.loadPlyAsync('./assets/einstein_high_res.ply').then((geometry) =>
+    //this.loadPlyAsync('./assets/einstein_high_res.ply').then((geometry) =>
     // this.loadPlyAsync('./assets/einstein_high_res_dual_color.ply').then((geometry) =>
+    this.loadPlyAsync('./assets/einstein_cleaned.ply').then((geometry) =>
     {
       this.streamingGeometry = geometry as THREE.BufferGeometry;
       this.streamingGeometryBufferSize = this.streamingGeometry.attributes.position.count * 3;
 
-      const source = interval(100);
+      const source = interval(1000);
       this.subscription = source.subscribe(this.scanTick.bind(this));
     }, error =>
     {
@@ -139,27 +143,13 @@ export class FabscanComponent implements OnInit
 
   /**
    * Swaps the pointclouds in the THREE.Scene
-   * @param currentCloud
-   * @param nextCloud
    */
-  private swapPointCloudsInScene(currentCloud, nextCloud)
+  private addPointCloudToScene()
   {
-    return new Promise((resolve, reject) =>
+    return new Promise((resolve) =>
     {
-      nextCloud.points.position.x = currentCloud.points.position.x;
-      nextCloud.points.position.y = currentCloud.points.position.y;
-      nextCloud.points.position.z = currentCloud.points.position.z;
-
-      nextCloud.points.rotation.x = currentCloud.points.rotation.x;
-      nextCloud.points.rotation.y = currentCloud.points.rotation.y;
-      nextCloud.points.rotation.z = currentCloud.points.rotation.z;
-
-      nextCloud.points.scale.x = currentCloud.points.scale.x;
-      nextCloud.points.scale.y = currentCloud.points.scale.y;
-      nextCloud.points.scale.z = currentCloud.points.scale.z;
-
-      this.renderService.scene.remove(currentCloud.points);
-      this.renderService.scene.add(nextCloud.points);
+      this.scanService.pointcloud.points.rotateOnAxis(new THREE.Vector3(1,0,0), -Math.PI / 2);
+      this.renderService.scene.add(this.scanService.pointcloud.points);
       resolve();
     });
   }
